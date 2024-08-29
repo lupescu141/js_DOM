@@ -772,6 +772,11 @@ const restaurants = [
 
 // your code here
 
+var homecrd = {
+  latitude: 0,
+  longitude: 0
+};
+
 const options = {
   enableHighAccuracy: true,
   timeout: 5000,
@@ -785,17 +790,21 @@ function success(pos) {
   console.log(`Latitude : ${crd.latitude}`);
   console.log(`Longitude: ${crd.longitude}`);
   console.log(`More or less ${crd.accuracy} meters.`);
+  homecrd.latitude = crd.latitude;
+  homecrd.longitude = crd.longitude;
 }
 
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
-
 navigator.geolocation.getCurrentPosition(success, error, options);
 
 restaurants.forEach(element => {
-  element.distance = ((element.location.coordinates[0] - crd.latitude)^2 + (element.location.coordinates[1] - crd.longitude)^2)
+  element.distance = ((element.location.coordinates[0] - homecrd.latitude)^2 + (element.location.coordinates[1] - homecrd.longitude)^2)
+  console.log(element.distance);
 });
 
+restaurants.sort((a,b) => a.distance - b.distance);
 console.log(restaurants);
+
