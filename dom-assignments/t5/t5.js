@@ -771,3 +771,24 @@ const restaurants = [
 ];
 
 // your code here
+var map = L.map('map').setView([60.192059, 24.945831], 11);
+var h3 = document.getElementById("resName");
+var p = document.getElementById("resAdress");
+
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+restaurants.forEach(element => {
+  var marker = L.marker([element.location.coordinates[1],element.location.coordinates[0]]).addTo(map).on("click",onClick);
+  marker.bindPopup(`<b>Ravintola:</b><br>${element.name}`).openPopup();
+
+  function onClick(e) {
+    h3.innerText = element.name;
+    p.innerText = element.address;
+}
+});
+
+

@@ -801,10 +801,15 @@ function error(err) {
 navigator.geolocation.getCurrentPosition(success, error, options);
 
 restaurants.forEach(element => {
-  element.distance = ((element.location.coordinates[0] - homecrd.latitude)^2 + (element.location.coordinates[1] - homecrd.longitude)^2)
+  element.distance = ((element.location.coordinates[1] - homecrd.longitude)^2 + (element.location.coordinates[0] - homecrd.latitude)^2)
   console.log(element.distance);
 });
 
 restaurants.sort((a,b) => a.distance - b.distance);
 console.log(restaurants);
 
+var table = document.getElementById("rtable");
+
+restaurants.forEach(element => {
+  table.insertAdjacentHTML('beforeend', `<tr><th>${element.name}</th><th>${element.address}</th></tr>`);
+});
